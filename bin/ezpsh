@@ -1,0 +1,60 @@
+#!/usr/bin/env php
+<?php
+
+use Psy\Configuration;
+use Psy\Shell;
+
+@include_once __DIR__ . '/../../../../config.php';
+require_once __DIR__ . '/../../../../autoload.php';
+
+
+function initKernel() {
+    // Initialize eZ publish
+    $kernel = new \ezpKernelWeb();
+
+    \eZExecution::setCleanExit( true );
+
+    $moduleRepos = \eZModule::activeModuleRepositories();
+    \eZModule::setGlobalPathList($moduleRepos);
+
+    // Make sure we have an admin user
+    $admin = \eZUser::fetch(14);
+    \eZUser::setCurrentlyLoggedInUser($admin, $admin->id());
+
+    $db = \eZDB::instance();
+
+    $ini = \eZINI::instance();
+    $languageCode = \eZLocale::instance()->httpLocaleCode();
+    $phpLocale = trim( $ini->variable( 'RegionalSettings', 'SystemLocale' ) );
+    if ( $phpLocale != '' )
+    {
+        setlocale( LC_ALL, explode( ',', $phpLocale ) );
+    }
+
+    return array(
+        'kernel' => $kernel,
+        'user' => $admin,
+        'db' => $db,
+        'site_ini' => $ini,
+    );
+}
+
+function initBase() {
+    if (!class_exists('Aplia\\Bootstrap\\Base')) {
+        return array();
+    }
+
+    return array(
+        'app' => Aplia\Bootstrap\Base::app(),
+        'config' => Aplia\Bootstrap\Base::config(),
+    );
+}
+
+$variables = array();
+$variables = array_merge($variables, initBase());
+$variables = array_merge($variables, initKernel());
+
+$config = new Configuration(array());
+$sh = new Shell($config);
+$sh->setScopeVariables($variables);
+$sh->run();

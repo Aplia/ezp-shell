@@ -1,0 +1,20 @@
+{
+    "name": "aplia/ez-legacy-shell",
+    "description": "Integration of PsySh and eZ publish legacy",
+    "homepage": "https://bitbucket.org/aplia/ez-legacy-shell",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Aplia dev-team",
+            "homepage": "https://bitbucket.org/aplia"
+        }
+    ],
+    "require": {
+        "php": ">=5.3",
+        "composer/composer": ">=1.0",
+        "psy/psysh": "@stable"
+    },
+    "bin": [
+        "bin/ezpsh"
+    ]
+}
