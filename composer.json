@@ -1,12 +1,12 @@
 {
     "name": "aplia/ez-legacy-shell",
     "description": "Integration of PsySh and eZ publish legacy",
-    "homepage": "https://bitbucket.org/aplia/ez-legacy-shell",
+    "homepage": "https://github.com/Aplia/ezp-shell",
     "license": "MIT",
     "authors": [
         {
             "name": "Aplia dev-team",
-            "homepage": "https://bitbucket.org/aplia"
+            "homepage": "https://github.com/Aplia"
         }
     ],
     "require": {
